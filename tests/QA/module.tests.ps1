@@ -64,7 +64,7 @@ $allModuleFunctions = &$mut {Get-Command -Module $args[0] -CommandType Function 
         $functionFile = Get-ChildItem -path $SourcePath -Recurse -Include "$($function.Name).ps1"
         Describe "Quality for $($function.Name)" -Tags 'TestQuality' {
             It "$($function.Name) has a unit test" {
-                Get-ChildItem "tests\" -recurse -include "$($function.Name).Tests.ps1" | Should Not BeNullOrEmpty
+                Get-ChildItem "tests\" -recurse -include "$($function.Name).Tests.ps1" | Should -Not -BeNullOrEmpty
             }
 
             if ($scriptAnalyzerRules) {
@@ -110,4 +110,3 @@ $allModuleFunctions = &$mut {Get-Command -Module $args[0] -CommandType Function 
             }
         }
     }
-
