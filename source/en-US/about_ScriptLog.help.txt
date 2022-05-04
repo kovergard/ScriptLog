@@ -2,7 +2,7 @@ TOPIC
     about_ScriptLog
 
 SHORT DESCRIPTION
-    Consistent and rich logging for your PowerShell scripts
+    A module providing consistent and rich logging for your PowerShell scripts.
 
 LONG DESCRIPTION
     {{ Add Long description here }}
@@ -21,4 +21,3 @@ SEE ALSO
 
 KEYWORDS
       {{ Add coma separated keywords here }}
-
