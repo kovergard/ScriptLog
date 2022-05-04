@@ -1,6 +1,6 @@
 # ScriptLog
 
-Consistent and rich logging for your PowerShell scripts
+A module providing consistent and rich logging for your PowerShell scripts.
 
 ## Make it yours
 
