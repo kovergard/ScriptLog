@@ -27,24 +27,13 @@ VersionedOutputDirectory: true
 ####################################################
 
 NestedModule:
-  DscResource.Common:
-    CopyOnly: true
-    Path: ./output/RequiredModules/DscResource.Common # relative to , default to '/Modules/'
-    # Destination: './output///Modules/' # or override with path relative to 
-    AddToManifest: false
-    # include: '*.*'
-    Exclude: PSGetModuleInfo.xml
-    #Filter:
-  Folder.Common:
-    CopyOnly: true
-    AddToManifest: false
 
 ####################################################
 #       Sampler Pipeline Configuration             #
 ####################################################
 # Defining 'Workflows' (suite of InvokeBuild tasks) to be run using their alias
 BuildWorkflow:
-  '.': # "." is the default Invoke-Build workflow. It is called when no -Tasks is specified to the build.ps1
+  ".": # "." is the default Invoke-Build workflow. It is called when no -Tasks is specified to the build.ps1
     - build
     - test
 
@@ -54,12 +43,9 @@ BuildWorkflow:
     - Build_NestedModules_ModuleBuilder
     - Create_changelog_release_output
 
-
   pack:
     - build
     - package_module_nupkg
-
-
 
   # Defining test task to be run when invoking `./build.ps1 -Tasks test`
   test:
@@ -72,13 +58,10 @@ BuildWorkflow:
   # Use this task when you have multiple parallel tests, which produce multiple
   # code coverage files and needs to get merged into one file.
   #merge:
-    #- Merge_CodeCoverage_Files
+  #- Merge_CodeCoverage_Files
 
   publish:
     - publish_module_to_gallery
-
-
-
 
 ####################################################
 #       PESTER  Configuration                      #
@@ -134,9 +117,7 @@ DscTest:
 # module in the file RequiredModules.psd1.
 ModuleBuildTasks:
   Sampler:
-    - '*.build.Sampler.ib.tasks'
-
-
+    - "*.build.Sampler.ib.tasks"
 
 # Invoke-Build Header to be used to 'decorate' the terminal output of the tasks.
 TaskHeader: |
@@ -149,7 +130,3 @@ TaskHeader: |
   Write-Build DarkGray "  $Path"
   Write-Build DarkGray "  $($Task.InvocationInfo.ScriptName):$($Task.InvocationInfo.ScriptLineNumber)"
   ""
-
-
-
-
