@@ -8,7 +8,7 @@
 # OutputDirectory: ../output/Sampler
 CopyPaths:
   - en-US
-  - DSCResources
+  # - DSCResources
   # - Modules
 Encoding: UTF8
 # Can be used to manually specify module's semantic version if the preferred method of
