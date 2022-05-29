@@ -1,5 +1,6 @@
-#$PSDefaultParameterValues.Clear()
-#Set-StrictMode -Version 3
+
+$PSDefaultParameterValues.Clear()
+Set-StrictMode -Version 3
 
 # Prepare value defining the default ScriptLog to log messages to
 $DefaultScriptLog = $null

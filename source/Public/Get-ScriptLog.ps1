@@ -1,22 +1,27 @@
-<#
-.SYNOPSIS
-    Returns active ScriptLogs.
-.DESCRIPTION
-    Returns a list of all active ScriptLogs.
-.EXAMPLE
-    Get-ScriptLog
-    Returns a list of all active ScriptLogs
-.EXAMPLE
-    Get-ScriptLog -Default
-    Returns the default ScriptLog
-.INPUTS
-    None. You cannot pipe objects to Get-ScriptLog.
-.OUTPUTS
-    ScriptLog[]. Get-ScriptLog returns one or more ScriptLogs.
-#>
 function Get-ScriptLog
 {
+    <#
+        .SYNOPSIS
+            Returns active ScriptLogs.
+
+        .DESCRIPTION
+            Returns a list of all active ScriptLogs.
+
+        .EXAMPLE
+            Get-ScriptLog
+
+            Returns a list of all active ScriptLogs
+
+        .EXAMPLE
+            Get-ScriptLog -Default
+
+            Returns the default ScriptLog
+
+        .NOTES
+            Author: KaaOver
+    #>
     [CmdletBinding()]
+    [OutputType([ScriptLog[]])]
     Param (
         # If specified, return only the default ScriptLog
         [Parameter()]

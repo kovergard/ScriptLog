@@ -1,30 +1,38 @@
-
-<#
-.SYNOPSIS
-    Adds log messages to a ScriptLog.
-.DESCRIPTION
-    Adds one or more log messages to a ScriptLog object. If multiple messages are sent via the pipleline, each message will get its own message entry in the log.
-
-    A single messages can have multiple lines, these will be writting to the log file with line changes. If a message is longer than 7500 characters, it will be broken into multiple messages as longer messages will break the CMTrace format.
-.EXAMPLE
-    Out-ScriptLog -Message "Starting script execution"
-    Write a log message to the information channel in the default ScriptLog instance.
-.EXAMPLE
-    Out-ScriptLog -Log $VerboseLog -Message "Starting script execution" -Severity Verbose
-    Write a log message to the verbose channel in the ScriptLog $VerboseLog
-.EXAMPLE
-    $Dir = Get-ChildItem -Path c:\temp; Out-ScriptLog -Message $Dir -Log $Log
-    Write an object with multiple lines in it to the log file. This will be writtin as a single log message, since the message is not passed through the pipeline.
-.EXAMPLE
-    "One","Two","Three" | Out-ScriptLog -Severity Warning
-    Send multiple messages to the log using the pipeline. Each message will get its own log message.
-.INPUTS
-    Anything sendt trough the pipeline to Out-ScriptLog is added as messages to the log. If not already strings, they will be converted using Out-String.
-.OUTPUTS
-    None. Out-ScriptLog does not generate any output.
-#>
 function Out-ScriptLog
 {
+
+    <#
+        .SYNOPSIS
+            Adds log messages to a ScriptLog.
+
+        .DESCRIPTION
+            Adds one or more log messages to a ScriptLog object. If multiple messages are sent via the pipleline, each message will get its own message entry in the log.
+
+            A single messages can have multiple lines, these will be writting to the log file with line changes. If a message is longer than 7500 characters, it will be broken into multiple messages as longer messages will break the CMTrace format.
+
+        .EXAMPLE
+            Out-ScriptLog -Message "Starting script execution"
+
+            Write a log message to the information channel in the default ScriptLog instance.
+
+        .EXAMPLE
+            Out-ScriptLog -Log $VerboseLog -Message "Starting script execution" -Severity Verbose
+
+            Write a log message to the verbose channel in the ScriptLog $VerboseLog
+
+        .EXAMPLE
+            $Dir = Get-ChildItem -Path c:\temp; Out-ScriptLog -Message $Dir -Log $Log
+
+            Write an object with multiple lines in it to the log file. This will be writtin as a single log message, since the message is not passed through the pipeline.
+
+        .EXAMPLE
+            "One","Two","Three" | Out-ScriptLog -Severity Warning
+
+            Send multiple messages to the log using the pipeline. Each message will get its own log message.
+
+        .NOTES
+            Author: KaaOver
+    #>
     [CmdletBinding()]
     Param (
         # One or more messages to add to the log
