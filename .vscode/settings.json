@@ -1,12 +1,12 @@
 {
-    "powershell.codeFormatting.openBraceOnSameLine": false,
+    "powershell.codeFormatting.openBraceOnSameLine": true,
     "powershell.codeFormatting.newLineAfterOpenBrace": true,
     "powershell.codeFormatting.newLineAfterCloseBrace": true,
     "powershell.codeFormatting.whitespaceBeforeOpenBrace": true,
     "powershell.codeFormatting.whitespaceBeforeOpenParen": true,
     "powershell.codeFormatting.whitespaceAroundOperator": true,
     "powershell.codeFormatting.whitespaceAfterSeparator": true,
-    "powershell.codeFormatting.ignoreOneLineBlock": false,
+    "powershell.codeFormatting.ignoreOneLineBlock": true,
     "powershell.codeFormatting.pipelineIndentationStyle": "IncreaseIndentationAfterEveryPipeline",
     "powershell.codeFormatting.preset": "Custom",
     "powershell.codeFormatting.alignPropertyValuePairs": true,
@@ -40,5 +40,10 @@
     },
     "yaml.schemas": {
         "https://json.schemastore.org/sourcehut-build-0.65.0.json": "file:///c%3A/Git/ScriptLog/build.yaml"
-    }
+    },
+    "powershell.codeFormatting.autoCorrectAliases": true,
+    "powershell.codeFormatting.trimWhitespaceAroundPipe": true,
+    "powershell.codeFormatting.useConstantStrings": true,
+    "powershell.codeFormatting.useCorrectCasing": true,
+    "powershell.codeFormatting.whitespaceBetweenParameters": true
 }
