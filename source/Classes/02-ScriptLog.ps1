@@ -1,6 +1,5 @@
 # Declare class for a log object
-class ScriptLog
-{
+class ScriptLog {
     [String] $FilePath
     [ScriptLogType] $LogType
     [String] $Source = $null
@@ -9,41 +8,29 @@ class ScriptLog
     [System.Collections.Generic.List[LogMessage]] $Messages
     hidden [String] $TimeZoneOffset
 
-    ScriptLog([String] $Path, [String] $BaseName, [Boolean] $AppendDateTime, [ScriptLogType] $LogType, [ScriptLogMessageSeverity[]] $MessagesOnConsole)
-    {
+    ScriptLog([String] $Path, [String] $BaseName, [Boolean] $AppendDateTime, [ScriptLogType] $LogType, [ScriptLogMessageSeverity[]] $MessagesOnConsole) {
         $this.LogType = $LogType
         $this.MessagesOnConsole = $MessagesOnConsole
         $this.StartTimeStamp = Get-Date
         $this.Messages = [System.Collections.Generic.List[LogMessage]]::new()
         $Offset = [timezone]::CurrentTimeZone.GetUtcOffset([datetime]::Now).TotalMinutes
-        if ($Offset -ge 0)
-        {
+        if ($Offset -ge 0) {
             $this.TimeZoneOffset = "+$Offset"
         }
-        else
-        {
+        else {
             $this.TimeZoneOffset = [string]"$Offset"
         }
-        if ($LogType -eq 'Memory')
-        {
+        if ($LogType -eq 'Memory') {
             $this.FilePath = $null
         }
-        else
-        {
+        else {
             $ConstructedPath = $Path + '\' + $BaseName
-            if ($AppendDateTime)
-            {
+            if ($AppendDateTime) {
                 $ConstructedPath += '-' + (Get-Date -Format 'yyyyMMddHHmmss')
             }
-            switch ($LogType)
-            {
-                CMTrace
-                {
+            switch ($LogType) {
+                CMTrace {
                     $ConstructedPath += '.log'
-                }
-                Default
-                {
-                    Write-Warning "Log type '$($this.LogType)' not implemented yet. Nothing will get sent to log file."
                 }
             }
             $this.FilePath = $ConstructedPath

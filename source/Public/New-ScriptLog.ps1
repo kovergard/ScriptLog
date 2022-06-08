@@ -1,5 +1,4 @@
-function New-ScriptLog
-{
+function New-ScriptLog {
     <#
         .SYNOPSIS
             Returns a new ScriptLog object
@@ -23,7 +22,7 @@ function New-ScriptLog
             Create two separate ScriptLog objects to log messages in different formats to two different files.
 
         .NOTES
-            Author: KaaOver
+            Author: kovergard
     #>
     [CmdletBinding()]
     [OutputType([ScriptLog])]
@@ -54,12 +53,10 @@ function New-ScriptLog
         $MessagesOnConsole = @('Error', 'Warning')
     )
 
-    process
-    {
+    process {
         $NewScriptLog = [ScriptLog]::New($Path, $BaseName, $AppendDateTime, $LogType, $MessagesOnConsole)
         $Script:ScriptLogs.Add($NewScriptLog)
-        if (-not $DefaultScriptLog)
-        {
+        if (-not $DefaultScriptLog) {
             Set-Variable -Name DefaultScriptLog -Value $NewScriptLog -Scope Script -Force
         }
         Write-Output $NewScriptLog

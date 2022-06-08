@@ -1,5 +1,4 @@
-function Out-ScriptLog
-{
+function Out-ScriptLog {
 
     <#
         .SYNOPSIS
@@ -31,7 +30,7 @@ function Out-ScriptLog
             Send multiple messages to the log using the pipeline. Each message will get its own log message.
 
         .NOTES
-            Author: KaaOver
+            Author: kovergard
     #>
     [CmdletBinding()]
     Param (
@@ -54,51 +53,40 @@ function Out-ScriptLog
         $Severity = 'Information'
     )
 
-    process
-    {
+    process {
         # Fail if no ScriptLogs exists
-        if ($ScriptLogs.Count -eq 0)
-        {
+        if ($ScriptLogs.Count -eq 0) {
             throw 'No ScriptLogs exist yet. Please use New-ScriptLog to create a new ScriptLog first'
         }
 
         # If no ScriptLog is specified, point to default ScriptLog.
-        if (-not $PSBoundParameters.ContainsKey('Log'))
-        {
+        if (-not $PSBoundParameters.ContainsKey('Log')) {
             $Log = $DefaultScriptLog
         }
 
         # Convert message to string if necessary
-        if ($Message.GetType() -ne 'System.String')
-        {
+        if ($Message.GetType() -ne 'System.String') {
             $Message = ($Message | Out-String).TrimEnd("`r`n")
         }
 
         # Determine log time and source of message
         $LogTime = Get-Date
-        if ($Log.Source)
-        {
+        if ($Log.Source) {
             $Source = $Log.Source
-            if ($MyInvocation.ScriptLineNumber)
-            {
+            if ($MyInvocation.ScriptLineNumber) {
                 $Source += ":$($MyInvocation.ScriptLineNumber)"
             }
         }
-        else
-        {
-            Try
-            {
-                If ($MyInvocation.ScriptName)
-                {
+        else {
+            Try {
+                If ($MyInvocation.ScriptName) {
                     [string]$Source = "$(Split-Path -Path $MyInvocation.ScriptName -Leaf -ErrorAction 'Stop'):$($MyInvocation.ScriptLineNumber)"
                 }
-                Else
-                {
+                Else {
                     $Source = 'interactive'
                 }
             }
-            Catch
-            {
+            Catch {
                 $Source = 'unknown'
             }
         }
@@ -111,37 +99,23 @@ function Out-ScriptLog
         $Log.Messages.Add([LogMessage]::New($LogTime, $Severity, $Source, $Context, $ProcessId, $Message))
 
         # If message should be written to a file, convert to proper format and write.
-        switch ($Log.LogType)
-        {
-            CMTrace
-            {
-                if ($Message.Length -gt 7500)
-                {
+        switch ($Log.LogType) {
+            CMTrace {
+                if ($Message.Length -gt 7500) {
                     $CMMessage = $Message.Substring(0, 7500)
                 }
-                else
-                {
+                else {
                     $CMMessage = $Message
                 }
                 $CmLogLine = '<![LOG[{0}]LOG]!><time="{1}" date="{2}" component="{3}" context="{4}" type="{5}" thread="{6}" file="{7}">'
-                $CmMessageType = Switch ($Severity)
-                {
-                    Error
-                    {
-                        3
-                    }
-                    Warning
-                    {
-                        2
-                    }
-                    Default
-                    {
-                        1
-                    }
+                $CmMessageType = Switch ($Severity) {
+                    Error { 3 }
+                    Warning { 2 }
+                    Default { 1 }
                 }
                 $CmTime = ($LogTime | Get-Date -Format 'HH\:mm\:ss.fff').ToString() + $Log.TimeZoneOffset
                 $CmDate = ($LogTime | Get-Date -Format 'MM-dd-yyyy')
-                $CmFile = 'edgemo.ScriptLog'
+                $CmFile = 'ScriptLog'
                 $CmLogLineFormat = $CMMessage, $CmTime, $CmDate, $Source, $Context, $CmMessageType, $ProcessId, $CmFile
                 $LogLine = $CmLogLine -f $CmLogLineFormat
                 $LogLine | Out-File -FilePath $Log.FilePath -Append -Encoding utf8 -NoClobber
@@ -149,24 +123,18 @@ function Out-ScriptLog
         }
 
         # Write output to console, if applicable
-        if ($Severity -in $Log.MessagesOnConsole)
-        {
-            Switch ($Severity)
-            {
-                Information
-                {
+        if ($Severity -in $Log.MessagesOnConsole) {
+            Switch ($Severity) {
+                Information {
                     Write-Information -MessageData $Message -InformationAction Continue
                 }
-                Verbose
-                {
+                Verbose {
                     $VerbosePreference = 'Continue'; Write-Verbose -Message $Message
                 }
-                Warning
-                {
+                Warning {
                     Write-Warning -Message $Message
                 }
-                Error
-                {
+                Error {
                     Write-Error -Message $Message
                 }
             }

@@ -1,5 +1,4 @@
-function Get-ScriptLog
-{
+function Get-ScriptLog {
     <#
         .SYNOPSIS
             Returns active ScriptLogs.
@@ -18,7 +17,7 @@ function Get-ScriptLog
             Returns the default ScriptLog
 
         .NOTES
-            Author: KaaOver
+            Author: kovergard
     #>
     [CmdletBinding()]
     [OutputType([ScriptLog[]])]
@@ -29,12 +28,9 @@ function Get-ScriptLog
         $Default
     )
 
-    process
-    {
-        if ($Default)
-        {
-            if (-not $DefaultScriptLog)
-            {
+    process {
+        if ($Default) {
+            if (-not $DefaultScriptLog) {
                 Write-Warning 'No ScriptLogs exists, cannot return default ScriptLog'
                 break
             }
