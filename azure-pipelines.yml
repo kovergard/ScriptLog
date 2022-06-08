@@ -283,7 +283,7 @@ stages:
           eq(variables['Build.SourceBranch'], 'refs/heads/main'),
           startsWith(variables['Build.SourceBranch'], 'refs/tags/')
         ),
-        contains(variables['System.TeamFoundationCollectionUri'], 'KaaOver')
+        contains(variables['System.TeamFoundationCollectionUri'], 'kovergard')
       )
     jobs:
       - job: Deploy_Module
@@ -320,4 +320,3 @@ stages:
               GitHubToken: $(GitHubToken)
               ReleaseBranch: $(defaultBranch)
               MainGitBranch: $(defaultBranch)
-
