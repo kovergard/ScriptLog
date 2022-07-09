@@ -32,7 +32,7 @@ It is planned to add additional file formats (CSV, ect) over time.
 
 ## Installation
 
-Installation options can be found at https://www.powershellgallery.com/packages/InvokeBuild
+Installation options can be found at https://www.powershellgallery.com/packages/ScriptLog
 
 ## Examples
 
