@@ -32,7 +32,7 @@ It is planned to add additional file formats (CSV, ect) over time.
 
 ## Installation
 
-TODO: Module will be published to the gallery when it is ready.
+Installation options can be found at https://www.powershellgallery.com/packages/InvokeBuild
 
 ## Examples
 
