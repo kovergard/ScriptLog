@@ -1,3 +1,8 @@
+#
+# Work in progress for Pester 5+
+# TODO: Improve quality of module quality test.
+#
+
 BeforeDiscovery {
     $ModuleName = 'ScriptLog'
 }
@@ -22,21 +27,20 @@ Describe "$ModuleName Sanity Tests - Help Content" -Tags 'Module' {
         )
     }
 
-    foreach ($Command in $CommandList)
-    {
+    foreach ($Command in $CommandList) {
         Context "$Command - Help Content" {
 
             #region Discovery
             BeforeDiscovery {
                 $Help = @{ Help = Get-Help -Name $Command -Full | Select-Object -Property * }
                 $Parameters = Get-Help -Name $Command -Parameter * -ErrorAction Ignore |
-                    Where-Object { $_.Name -and $_.Name -notin $ShouldProcessParameters } |
-                        ForEach-Object {
-                            @{
-                                Name        = $_.name
-                                Description = $_.Description.Text
-                            }
-                        }
+                Where-Object { $_.Name -and $_.Name -notin $ShouldProcessParameters } |
+                ForEach-Object {
+                    @{
+                        Name        = $_.name
+                        Description = $_.Description.Text
+                    }
+                }
                 $Ast = @{
                     # Ast will be $null if the command is a compiled cmdlet
                     Ast        = (Get-Content -Path "function:/$Command" -ErrorAction Ignore).Ast
