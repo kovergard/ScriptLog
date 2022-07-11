@@ -56,7 +56,7 @@ function Out-ScriptLog {
     process {
         # Fail if no ScriptLogs exists
         if ($ScriptLogs.Count -eq 0) {
-            throw 'No ScriptLogs exist yet. Please use New-ScriptLog to create a new ScriptLog first'
+            throw 'Use New-ScriptLog to create a ScriptLog before using Out-ScriptLog'
         }
 
         # If no ScriptLog is specified, point to default ScriptLog.
