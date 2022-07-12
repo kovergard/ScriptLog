@@ -98,19 +98,18 @@ Pester:
   #  - TestQuality
   Tag:
   CodeCoverageThreshold: 85 # Set to 0 to bypass
-  #CodeCoverageOutputFile: JaCoCo_.xml
-  #CodeCoverageOutputFileEncoding: ascii
-  # Use this if code coverage should be merged from several pipeline test jobs.
-  # Any existing keys above should be replaced.
-  # CodeCoverageOutputFile - the file that is created for each pipeline test job.
-  # CodeCoverageFilePattern - the pattern used to search all pipeline test job artifacts
-  # after the file specified in CodeCoverageOutputFile.
-  # CodeCoverageMergedOutputFile - the file that is created by the merge build task and
-  # is the file that should be uploaded to code coverage services.
-  #CodeCoverageOutputFile: JaCoCo_Merge.xml
-  CodeCoverageMergedOutputFile: JaCoCo_coverage.xml
-  CodeCoverageFilePattern: Codecov*.xml
 
+####################################################
+#           Code Coverage Configuration            #
+####################################################
+
+CodeCoverage:
+  # Filename of the file that will be outputted by the task Merge_CodeCoverage_Files.
+  CodeCoverageMergedOutputFile: JaCoCo_coverage.xml
+  # File pattern used to search for files under the ./output/testResults folder
+  # by task Merge_CodeCoverage_Files.
+  CodeCoverageFilePattern: Codecov*.xml
+  
 # Import ModuleBuilder tasks from a specific PowerShell module using the build
 # task's alias. Wildcard * can be used to specify all tasks that has a similar
 # prefix and or suffix. The module contain the task must be added as a required

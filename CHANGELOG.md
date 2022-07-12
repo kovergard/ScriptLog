@@ -12,4 +12,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Moved from private repo to public Github site https://github.com/kovergard/ScriptLog
+- Changed code coverage parameters to allow publishing 
 - First version published to PowerShell Gallery
