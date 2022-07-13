@@ -266,7 +266,7 @@ stages:
             inputs:
               codeCoverageTool: 'JaCoCo'
               summaryFileLocation: '$(buildFolderName)/$(testResultFolderName)/JaCoCo_coverage.xml'
-              pathToSources: '$(Build.SourcesDirectory)/source/'
+              pathToSources: '$(Build.SourcesDirectory)/output/'
           - script: |
               bash <(curl -s https://codecov.io/bash) -f "./$(buildFolderName)/$(testResultFolderName)/JaCoCo_coverage.xml" -t $(CodeCovToken)
             displayName: 'Publish Code Coverage to Codecov.io'
