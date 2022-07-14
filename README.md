@@ -1,12 +1,9 @@
-# ScriptLog
+# ScriptLog module ![](https://dev.azure.com/kovergard/ScriptLog/_apis/build/status/kovergard.ScriptLog?branchName=main)
+
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/ScriptLog?label=ScriptLog)](https://www.powershellgallery.com/packages/ScriptLog/)
+![](https://img.shields.io/powershellgallery/p/ScriptLog.svg)
 
 A module providing consistent and rich logging for your PowerShell scripts.
-
-# ScriptLog module
-
-## Description
-
-The ScriptLog module makes it easy to add consistant logging to scripts.
 
 ## Features
 
