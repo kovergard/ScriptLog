@@ -33,6 +33,12 @@ class ScriptLog {
                     $ConstructedPath += '.log'
                 }
             }
+            # Ensure path is not already used by another ScriptLog
+            if ($Script:ScriptLogs.count -gt 0) {
+                if ($ConstructedPath -in $Script:ScriptLogs.FilePath) {
+                    throw "Another active ScriptLog is already using the file '$ConstructedPath'"
+                }
+            }
             $this.FilePath = $ConstructedPath
         }
     }
