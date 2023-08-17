@@ -12,7 +12,7 @@ Describe 'New-ScriptLog' {
         $ScriptLog.MessagesOnConsole | Should -Be @('Information', 'Verbose')
     }
     It 'should return a ScriptLog object where the outfile name have a datetime suffixed, if AppendDateTime is set to true' {
-        $ScriptLog = New-ScriptLog -AppendDateTime $true
+        $ScriptLog = New-ScriptLog -AppendDateTime
         $ScriptLog.GetType().Name | Should -Be 'ScriptLog'
         $ScriptLog.FilePath -match 'ScriptLog-\d{14}\.log$' | Should -Be $true
     }

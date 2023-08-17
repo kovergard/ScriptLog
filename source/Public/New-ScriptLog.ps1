@@ -39,8 +39,8 @@ function New-ScriptLog {
 
         # Indicates if a datetime should be suffixed on the log base name.
         [Parameter()]
-        [bool]
-        $AppendDateTime = $false,
+        [switch]
+        $AppendDateTime,
 
         # Type of log
         [Parameter()]
