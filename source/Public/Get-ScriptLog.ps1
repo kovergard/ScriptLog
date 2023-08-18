@@ -30,8 +30,12 @@ function Get-ScriptLog {
 
     process {
         if ($Default) {
-            if (-not $DefaultScriptLog) {
+            if ($Script:ScriptLogs.Count -eq 0) {
                 Write-Warning 'No ScriptLogs exists, cannot return default ScriptLog'
+                break
+            }
+            elseif (-not $DefaultScriptLog) {
+                Write-Warning 'No default ScriptLogs selected.'
                 break
             }
             return $DefaultScriptLog

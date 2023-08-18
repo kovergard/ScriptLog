@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- New function Close-ScriptLog added, to allow for closing active logs during a session.
+- New function Remove-ScriptLog added, to allow for removing active logs during a session. This only removes the log from memory, any files remains on disk. 
 
 ### Fixed
 

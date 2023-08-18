@@ -1,20 +1,20 @@
-function Close-ScriptLog {
+function Remove-ScriptLog {
     <#
         .SYNOPSIS
-            Closes a ScriptLog.
+            Removes a ScriptLog from memory.
 
         .DESCRIPTION
-            Closes one (or all) active ScriptLogs, without touching the log files used by the log(s).
+            Removes one (or all) active ScriptLogs from memory, without removing the log files that has been used by the log(s).
 
         .EXAMPLE
-            Close-ScriptLog -Log $MyScriptLog 
+            Remove-ScriptLog -Log $MyScriptLog 
 
-            Closes the ScriptLog in $MyScriptLog
+            Removes the ScriptLog defined in $MyScriptLog
 
         .EXAMPLE
-            Close-ScriptLog -All
+            Remove-ScriptLog -All
 
-            Closes all ScriptLogs
+            Removes all ScriptLogs
 
         .NOTES
             Author: kovergard
@@ -22,26 +22,34 @@ function Close-ScriptLog {
     [CmdletBinding(DefaultParameterSetName = 'SpecificLog')]
     [OutputType()]
     Param (
-        # If specified, closes all ScriptLog objects
+        # ScriptLog object to remove
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'SpecificLog')]
         [ScriptLog]
         $Log,
 
-        # If specified, closes all ScriptLog objects
+        # If specified, removes all ScriptLog objects
         [Parameter(ParameterSetName = 'AllLogs')]
         [switch]
         $All
     )
-
+ 
     process {
         # If no ScriptLogs exists, silently return
         if ($Script:ScriptLogs.Count -eq 0) {
             Return
         }
+        # Remove all ScriptLogs if requested
         if ($All) {
             $Script:ScriptLogs | ForEach-Object { $_.Messages.Clear() }
             $Script:ScriptLogs.Clear()
             $Script:DefaultScriptLog = $null
+        }
+        else {
+            if ($Script:DefaultScriptLog -eq $Log) {
+                $Script:DefaultScriptLog = $null
+            }
+            $Script:ScriptLogs.Remove($Log) | Out-Null
+            $Log.Messages.Clear()
         }
     }
 }

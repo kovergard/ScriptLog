@@ -61,6 +61,9 @@ function Out-ScriptLog {
 
         # If no ScriptLog is specified, point to default ScriptLog.
         if (-not $PSBoundParameters.ContainsKey('Log')) {
+            if (-not $DefaultScriptLog) {
+                throw 'No default ScriptLog has been defined'
+            }
             $Log = $DefaultScriptLog
         }
 
