@@ -7,9 +7,9 @@ function Remove-ScriptLog {
             Removes one (or all) active ScriptLogs from memory, without removing the log files that has been used by the log(s).
 
         .EXAMPLE
-            Remove-ScriptLog -Log $MyScriptLog 
+            Remove-ScriptLog -Name "MyLog"
 
-            Removes the ScriptLog defined in $MyScriptLog
+            Removes the ScriptLog named "MyLog"
 
         .EXAMPLE
             Remove-ScriptLog -All
@@ -24,8 +24,8 @@ function Remove-ScriptLog {
     Param (
         # ScriptLog object to remove
         [Parameter(Mandatory, ValueFromPipeline, ParameterSetName = 'SpecificLog')]
-        [ScriptLog]
-        $Log,
+        [String]
+        $Name,
 
         # If specified, removes all ScriptLog objects
         [Parameter(ParameterSetName = 'AllLogs')]
@@ -34,10 +34,6 @@ function Remove-ScriptLog {
     )
  
     process {
-        # If no ScriptLogs exists, silently return
-        if ($Script:ScriptLogs.Count -eq 0) {
-            Return
-        }
         # Remove all ScriptLogs if requested
         if ($All) {
             $Script:ScriptLogs | ForEach-Object { $_.Messages.Clear() }
@@ -45,6 +41,10 @@ function Remove-ScriptLog {
             $Script:DefaultScriptLog = $null
         }
         else {
+            $Log = $Script:ScriptLogs | Where-Object { $_.Name -eq $Name }
+            if (-not $Log) {
+                throw "Log with name '$Name' not found"
+            }
             if ($Script:DefaultScriptLog -eq $Log) {
                 $Script:DefaultScriptLog = $null
             }

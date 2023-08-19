@@ -12,12 +12,12 @@ function New-ScriptLog {
             Create a new ScriptLog object with default settings. File will be created in the temp folder, with the name ScriptLog.log and will be written in the CMTrace format.
 
         .EXAMPLE
-            $MemoryLog = New-ScriptLog -LogType Memory -MessagesOnConsole @("Error","Verbose")
+            $MemoryLog = New-ScriptLog -Name "TempLog" -LogType Memory -MessagesOnConsole @("Error","Verbose")
 
             Create an in-memory SriptLog instance to allow for collection of log messages during runtime. Only errors and verbose messages will be written to the console (Warnings will not, they will only be written to the in-memory log)
 
         .EXAMPLE
-            $CriticalFileLog = New-ScriptLog -Path "C:\Logs" -BaseName "CriticalErrors" -AppendDateTime; $VerboseLog = New-ScriptLog -Path "C:\Logs" -BaseName "Verbose" -MessagesOnConsole "Verbose"
+            $CriticalFileLog = New-ScriptLog -Name "Critical" -Path "C:\Logs" -BaseName "CriticalErrors" -AppendDateTime; $VerboseLog = New-ScriptLog -Name "Verbose" -Path "C:\Logs" -BaseName "Verbose" -MessagesOnConsole "Verbose"
 
             Create two separate ScriptLog objects to log messages in different formats to two different files.
 
@@ -27,6 +27,11 @@ function New-ScriptLog {
     [CmdletBinding()]
     [OutputType([ScriptLog])]
     Param (
+        # The name of the log
+        [Parameter()]
+        [string]
+        $Name = (New-Guid).Guid,
+
         # Directory in which to create the logfile
         [Parameter()]
         [string]
@@ -54,7 +59,12 @@ function New-ScriptLog {
     )
 
     process {
-        $NewScriptLog = [ScriptLog]::New($Path, $BaseName, $AppendDateTime, $LogType, $MessagesOnConsole)
+        if ($Script:ScriptLogs.Count -gt 0) {
+            if ($Script:ScriptLogs.Name -contains $Name) {
+                throw "A ScriptLog with the name '$Name' already exists. Active ScriptLogs must have unique names."
+            }
+        }
+        $NewScriptLog = [ScriptLog]::New($Name, $Path, $BaseName, $AppendDateTime, $LogType, $MessagesOnConsole)
         $Script:ScriptLogs.Add($NewScriptLog)
         if (-not $DefaultScriptLog) {
             Set-Variable -Name DefaultScriptLog -Value $NewScriptLog -Scope Script -Force
