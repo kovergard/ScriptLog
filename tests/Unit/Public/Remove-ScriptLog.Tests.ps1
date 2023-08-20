@@ -23,6 +23,4 @@ Describe 'Remove-ScriptLog' {
     It 'should throw if asked to remove a ScriptLog that doesnt exist. ' {
         { Remove-ScriptLog -Name 'DoesNotExist' } | Should -Throw "Log with name 'DoesNotExist' not found"
     }
-
-    #TODO: Improve quality of tests and add additional tests to Remove-ScriptLog
 }

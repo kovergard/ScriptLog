@@ -44,23 +44,4 @@ Describe 'Get-ScriptLog' {
         Remove-ScriptLog -Name 'DefaultToDelete'
         { Get-ScriptLog -Default } | Should -Throw 'No default ScriptLog has been defined'
     }
-
-
-    <#    It 'should warn when requesting the default ScriptLog if no logs has been created yet' {
-        Mock -ModuleName 'ScriptLog' -CommandName Write-Warning -MockWith { Return 'WarningNoLogs' } -ParameterFilter { $Message -eq 'No ScriptLogs exists, cannot return default ScriptLog' }
-        $DefaultLog = Get-ScriptLog -Default 
-        $DefaultLog | Should -Be 'WarningNoLogs'
-    }
-
-    It 'should warn when requesting the default ScriptLog if there is no default' {
-        New-ScriptLog -Name 'DefaultToDelete' -LogType Memory
-        New-ScriptLog -Name 'ExtraToKeep' -LogType Memory
-        Remove-ScriptLog -Name 'DefaultToDelete'
-        Mock -ModuleName 'ScriptLog' -CommandName Write-Warning -MockWith { Return 'WarningNoDefaultLog' } -ParameterFilter { $Message -eq 'No default ScriptLog has been defined' }
-        $DefaultLog = Get-ScriptLog -Default 
-        $DefaultLog | Should -Be 'WarningNoDefaultLog'
-    }
-#>
-
-    #TODO: Improve quality of tests and add additional tests to Get-ScriptLog
 }

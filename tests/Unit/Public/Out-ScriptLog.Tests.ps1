@@ -51,7 +51,7 @@ Describe 'Out-ScriptLog' {
     }
 
     It 'should output messages with severity Error using Write-Error' {
-        $ScriptLog = New-ScriptLog -Name 'ErrorTest' -LogType Memory
+        New-ScriptLog -Name 'ErrorTest' -LogType Memory
         Mock -ModuleName $ModuleName -CommandName 'Write-Error' -MockWith { Write-Output 'Test.Error' } -ParameterFilter { $Message -eq 'Test.Error' }
         Out-ScriptLog -Message 'Test.Error' -Name 'ErrorTest' -Severity Error | Should -Be 'Test.Error'
         Assert-MockCalled -ModuleName $ModuleName -CommandName 'Write-Error' -Exactly 1 -Scope it
