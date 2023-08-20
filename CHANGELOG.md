@@ -7,7 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- New function Remove-ScriptLog added, to allow for removing active logs during a session. This only removes the log object from memory, any files remains on disk. 
+- Logs can now be given a name upon creation, to make it easier to distinguish between them when using multiple logs. In the future, this will be the only way to target a specific log.
+
 ### Changed
+
+- The parameter AppendDateTime in function New-ScriptLog is now a switch instead of a boolean.
+- Internal test quality improved.
+
+### Deprecated
+
+- Over time, it has been found that manipulating the ScriptLog objects directly have some unforeseen side effects. Due to this, functions will be changed so that the new Name attribute can be used to target a specific log. For now, logs can still be accessed by passing the ScriptLog object. At some future release, the New-ScriptLog and Get-ScriptLog functions will stop returning the actual object, but instead return a new customobject containing the log properties.
+
+### Fixed
+
+- It is no longer possible to have two ScrtipLogs using the same file.
 
 ## [0.3.1] - 2022-07-14
 

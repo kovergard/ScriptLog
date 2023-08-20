@@ -1,5 +1,6 @@
 # Declare class for a log object
 class ScriptLog {
+    [String] $Name
     [String] $FilePath
     [ScriptLogType] $LogType
     [String] $Source = $null
@@ -8,7 +9,8 @@ class ScriptLog {
     [System.Collections.Generic.List[LogMessage]] $Messages
     hidden [String] $TimeZoneOffset
 
-    ScriptLog([String] $Path, [String] $BaseName, [Boolean] $AppendDateTime, [ScriptLogType] $LogType, [ScriptLogMessageSeverity[]] $MessagesOnConsole) {
+    ScriptLog([String] $Name, [String] $Path, [String] $BaseName, [Boolean] $AppendDateTime, [ScriptLogType] $LogType, [ScriptLogMessageSeverity[]] $MessagesOnConsole) {
+        $this.Name = $Name
         $this.LogType = $LogType
         $this.MessagesOnConsole = $MessagesOnConsole
         $this.StartTimeStamp = Get-Date
@@ -31,6 +33,12 @@ class ScriptLog {
             switch ($LogType) {
                 CMTrace {
                     $ConstructedPath += '.log'
+                }
+            }
+            # Ensure path is not already used by another ScriptLog
+            if ($Script:ScriptLogs.count -gt 0) {
+                if ($ConstructedPath -in $Script:ScriptLogs.FilePath) {
+                    throw "Another active ScriptLog is already using the file '$ConstructedPath'"
                 }
             }
             $this.FilePath = $ConstructedPath
