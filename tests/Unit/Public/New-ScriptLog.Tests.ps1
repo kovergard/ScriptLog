@@ -1,4 +1,9 @@
 Describe 'New-ScriptLog' {
+
+    BeforeEach {
+        Remove-ScriptLog -All
+    }
+
     It 'should return a ScriptLog object with default properties when no parameters are given' {
         $ScriptLog = New-ScriptLog
         $ScriptLog.GetType().Name | Should -Be 'ScriptLog'
@@ -18,8 +23,14 @@ Describe 'New-ScriptLog' {
     }
     It 'should throw an error if two ScriptLog objects are using the same filepath' {
         { 
-            $ScriptLog1 = New-ScriptLog
-            $ScriptLog2 = New-ScriptLog 
-        } | Should -Throw
+            New-ScriptLog 
+            New-ScriptLog 
+        } | Should -Throw 
+    }
+    It 'should throw an error if two ScriptLog objects are using the same name' {
+        { 
+            New-ScriptLog -Name 'DuplicateName' -LogType Memory
+            New-ScriptLog -Name 'DuplicateName' -LogType Memory
+        } | Should -Throw "A ScriptLog with the name 'DuplicateName' already exists. Active ScriptLogs must have unique names."
     }
 }

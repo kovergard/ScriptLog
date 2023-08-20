@@ -19,7 +19,7 @@ The module supports logging in the following ways:
 
 * Streamed to a log files in the CMTrace format (used by System Center Configuration Manager). The advantage of this format is that a log entry can contain multiple lines, and warnings and errors are highlighted automatically.
 
-  ![](Screenshots/CMTrace.png)
+  ![](screenshots/CMTrace.png)
   
   *Example of CMTrace output*
 
@@ -45,14 +45,14 @@ Create a new ScriptLog object with default settings. File will be created in the
 
 #### Logging to memory with console output
 ~~~powershell
-$MemoryLog = New-ScriptLog -LogType Memory -MessagesOnConsole @("Error","Verbose")
+New-ScriptLog -Name "MemoryLog" -LogType Memory -MessagesOnConsole @("Error","Verbose")
 ~~~
 Create an in-memory ScriptLog object to allow for collection of log messages during runtime. Only errors and verbose messages will be written to the console. Warning and Information messages will only be written to the in-memory log.
 
 #### Multiple logs
 ~~~powershell
-$CriticalFileLog = New-ScriptLog -Path "C:\Logs" -BaseName "CriticalErrors" -AppendDateTime
-$VerboseLog = New-ScriptLog -Path "C:\Logs" -BaseName "Verbose" -MessagesOnConsole "Verbose"
+New-ScriptLog -Name "CriticalLog" -Path "C:\Logs" -BaseName "CriticalErrors" -AppendDateTime
+New-ScriptLog -Name "VerboseOnly" -Path "C:\Logs" -BaseName "Verbose" -MessagesOnConsole "Verbose"
 ~~~
 Create two separate ScriptLog objects to log messages in different formats to two different files. The first log gets a datetime appended to the filename.
 
@@ -66,13 +66,13 @@ Write a log message to the information channel in the default ScriptLog instance
 #### Logging object data
 ~~~powershell
 $Dir = Get-ChildItem -Path c:\temp
-Out-ScriptLog -Log $Log -Message $Dir -Severity Verbose
+Out-ScriptLog -Name "MyLog" -Message $Dir -Severity Verbose
 ~~~
 Write an object with multiple lines in it to the log file. This will be writtin as a single log message, since the message is not passed through the pipeline.
 
 #### Multiple messages via the pipeline.
 ~~~powershell
-"One","Two","Three" | Out-ScriptLog -Log $Log -Severity Warning
+"One","Two","Three" | Out-ScriptLog -Name "MyLog" -Severity Warning
 ~~~
 Send multiple messages to the log using the pipeline. Each message will get its own log message.    
 

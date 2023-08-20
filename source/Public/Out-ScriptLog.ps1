@@ -32,7 +32,7 @@ function Out-ScriptLog {
         .NOTES
             Author: kovergard
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'ByName')]
     Param (
         # One or more messages to add to the log
         [Parameter(Mandatory = $true,
@@ -42,8 +42,13 @@ function Out-ScriptLog {
             ValueFromRemainingArguments = $false)]
         $Message,
 
+        # The Name of the ScriptLog to add the messages to. If no ScriptLog is supplied, logging is done to the default ScriptLog.
+        [Parameter(ParameterSetName = 'ByName')]
+        [String]
+        $Name,
+
         # The ScriptLog object to add the messages to. If no ScriptLog is supplied, logging is done to the default ScriptLog.
-        [Parameter()]
+        [Parameter(ParameterSetName = 'ByObject')]
         [ScriptLog]
         $Log,
 
@@ -54,17 +59,23 @@ function Out-ScriptLog {
     )
 
     process {
-        # Fail if no ScriptLogs exists
-        if ($ScriptLogs.Count -eq 0) {
-            throw 'Use New-ScriptLog to create a ScriptLog before using Out-ScriptLog'
-        }
-
         # If no ScriptLog is specified, point to default ScriptLog.
-        if (-not $PSBoundParameters.ContainsKey('Log')) {
+        if (-not $PSBoundParameters.ContainsKey('Log') -and -not $PSBoundParameters.ContainsKey('Name')) {
             if (-not $DefaultScriptLog) {
-                throw 'No default ScriptLog has been defined'
+                throw 'No default ScriptLog has been defined, please use -Name or -Log parameter to target log'
             }
             $Log = $DefaultScriptLog
+        }
+        else {
+            if ($PSBoundParameters.ContainsKey('Name')) {
+                $Log = $Script:ScriptLogs | Where-Object { $_.Name -eq $Name }
+                if (-not $Log) {
+                    throw "Log with name '$Name' not found"
+                }
+            }
+            else {
+                #TODO: Detect if Log exists
+            }
         }
 
         # Convert message to string if necessary

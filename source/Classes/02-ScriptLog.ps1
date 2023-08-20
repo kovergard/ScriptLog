@@ -1,5 +1,6 @@
 # Declare class for a log object
 class ScriptLog {
+    [String] $Name
     [String] $FilePath
     [ScriptLogType] $LogType
     [String] $Source = $null
@@ -8,7 +9,8 @@ class ScriptLog {
     [System.Collections.Generic.List[LogMessage]] $Messages
     hidden [String] $TimeZoneOffset
 
-    ScriptLog([String] $Path, [String] $BaseName, [Boolean] $AppendDateTime, [ScriptLogType] $LogType, [ScriptLogMessageSeverity[]] $MessagesOnConsole) {
+    ScriptLog([String] $Name, [String] $Path, [String] $BaseName, [Boolean] $AppendDateTime, [ScriptLogType] $LogType, [ScriptLogMessageSeverity[]] $MessagesOnConsole) {
+        $this.Name = $Name
         $this.LogType = $LogType
         $this.MessagesOnConsole = $MessagesOnConsole
         $this.StartTimeStamp = Get-Date
