@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2023-08-20
+
 ### Added
 
 - New function Remove-ScriptLog added, to allow for removing active logs during a session. This only removes the log object from memory, any files remains on disk. 
